@@ -35,7 +35,8 @@
   .load-cont{position:fixed; inset:0; z-index:99999}
   .load-cont.back{z-index:-1; visibility:hidden}
   .load-cont .bg-color{position:absolute; inset:0; background:var(--dark); will-change:transform}
-  .load-cont .bg-color .stamp{position:absolute; left:0; right:0; top:50%; margin:auto; width:clamp(116px, 13vw, 168px); height:auto; transform:translateY(-50%)}
+  .load-cont .intro-logo{position:absolute; left:0; right:0; top:50%; margin:auto; width:min(78vw, 860px); height:auto; transform:translateY(-50%)}
+  .load-cont .scribble{position:absolute; inset:0; width:100%; height:100%; pointer-events:none}
   .vf{position:absolute; inset:0; z-index:2100; pointer-events:none; color:#fff; font:500 13px/1 var(--sans); letter-spacing:.08em; opacity:0}
   .vf .k{position:absolute; width:clamp(26px, 3.6vw, 52px); height:clamp(26px, 3.6vw, 52px); border:0 solid rgba(255,255,255,.92)}
   .vf .tl{top:max(8vh, 64px); left:6vw; border-top-width:2px; border-left-width:2px}
@@ -111,6 +112,7 @@
   .hero .slide.active{opacity:1; z-index:1}
   .hero .slide img{width:100%; height:100%; object-fit:cover; transform:scale(1.1); transition:transform 8s linear}
   .hero .slide.active img{transform:scale(1)}
+  .locked .hero .slide img{transform:none; transition:none}
   .hero::after{content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
     background:linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 45%, rgba(0,0,0,.72) 100%)}
   .credits{position:absolute; z-index:5; left:var(--g); right:var(--g); bottom:clamp(92px, 14vh, 150px)}
@@ -303,7 +305,7 @@
 
 <!-- ================= loader ================= -->
 <div class="load-cont" aria-hidden="true">
-  <div class="bg-color"><img class="stamp" src="assets/pp-stamp.webp" width="1283" height="1221" alt=""></div>
+  <div class="bg-color"><img class="intro-logo" src="assets/logo-white.png" width="1040" height="115" alt=""><canvas class="scribble"></canvas></div>
   <div class="layers">
     <div class="layers__item"><div class="layers__item-img" style="background-image:url(assets/load-1.webp)"></div></div>
     <div class="layers__item"><div class="layers__item-img" style="background-image:url(assets/load-2.webp)"></div></div>
@@ -573,8 +575,40 @@
   function preload(srcs){
     return Promise.all(srcs.map(function(src){ return new Promise(function(res){ var i = new Image(); i.onload = i.onerror = res; i.src = src; }); }));
   }
+  function makeScribble(){
+    var cv = document.querySelector('.load-cont .scribble'), ctx = cv.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), W = innerWidth, H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.scale(dpr, dpr);
+    ctx.strokeStyle = '#ec1f27'; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    // centre of the red "o" inside the wordmark (measured from the logo file)
+    var lr = document.querySelector('.load-cont .intro-logo').getBoundingClientRect();
+    var cx = lr.left + lr.width * .796, cy = lr.top + lr.height * .604, r0 = lr.width * .03;
+    var R = Math.max(Math.hypot(cx, cy), Math.hypot(W - cx, cy), Math.hypot(cx, H - cy), Math.hypot(W - cx, H - cy)) * 1.15;
+    var N = 900, pts = [], th = Math.random() * 6.28, ox = 0, oy = 0, dth = .15;
+    var a1 = Math.random() * 6.28, a2 = Math.random() * 6.28;
+    for (var i = 0; i <= N; i++) {
+      var t = i / N;
+      th += dth * (.75 + Math.random() * .5);
+      var gap = (R - r0) * 1.7 * Math.pow(Math.max(t, .02), .7) * (6.283 / dth) / N; // distance between neighbouring loops
+      var r = (r0 + (R - r0) * Math.pow(t, 1.7)) * (1 + .18 * Math.sin(th * .45 + a1) + .09 * Math.sin(th * 1.6 + a2));
+      ox += (Math.random() - .5) * r * .05; oy += (Math.random() - .5) * r * .05;
+      ox *= .96; oy *= .96;
+      pts.push({x: cx + ox + Math.cos(th) * r * (1 + .12 * Math.sin(t * 9)), y: cy + oy + Math.sin(th) * r * .86,
+                w: Math.max(1.6, gap * (.4 + 1.8 * Math.pow(t, 4)))});
+    }
+    var done = 2, o = {p: 0};
+    function mid(a, b){ return {x: (a.x + b.x) / 2, y: (a.y + b.y) / 2}; }
+    o.draw = function(){
+      var to = Math.min(N, Math.floor(o.p * N));
+      for (; done <= to; done++) {
+        var a = pts[done - 2], b = pts[done - 1], c = pts[done], m1 = mid(a, b), m2 = mid(b, c);
+        ctx.lineWidth = b.w; ctx.beginPath(); ctx.moveTo(m1.x, m1.y); ctx.quadraticCurveTo(b.x, b.y, m2.x, m2.y); ctx.stroke();
+      }
+    };
+    return o;
+  }
   function runLoader(){
-    var total = layers.length, D = .46, DELAY = .2, PRE = 1.55;
+    var total = layers.length, D = .46, DELAY = .2, PRE = 2.7;
     var vf = document.querySelector('.vf'), tcEl = document.getElementById('tc'), t0 = performance.now(), running = true;
     (function tick(){
       if (!running) return;
@@ -595,10 +629,13 @@
       .from('.vf .bl', {x: '-6vw', y: '6vh', duration: .8, ease: 'expo.out'}, 0)
       .from('.vf .br', {x: '6vw', y: '6vh', duration: .8, ease: 'expo.out'}, 0)
       .from('.vf .rec, .vf .tc', {opacity: 0, duration: .4, stagger: .08}, .25)
-      .from('.vf .mid', {opacity: 0, scale: .4, duration: .4, ease: 'expo.out'}, PRE + .2)
-    // 1b) the scribbled "o" spins open until its lines cover the whole screen
-      .to('.load-cont .stamp', {rotation: 220, scale: function(){ var st = document.querySelector('.load-cont .stamp'); return Math.hypot(innerWidth, innerHeight) / Math.min(st.offsetWidth, st.offsetHeight) * 1.25; }, duration: 1.2, ease: 'expo.in'}, .3)
-      .to('.load-cont .bg-color', {backgroundColor: '#ec1f27', duration: .3, ease: 'power1.in'}, 1.2);
+      .from('.vf .mid', {opacity: 0, scale: .4, duration: .4, ease: 'expo.out'}, PRE + .2);
+    // 1b) the logo appears, then the scribble in the "o" of POINT keeps being drawn,
+    //     looping outward unevenly until the strokes cover the whole screen
+    var scrib = makeScribble();
+    tl.from('.load-cont .intro-logo', {opacity: 0, y: 14, duration: .7, ease: 'power2.out'}, 0)
+      .to(scrib, {p: 1, duration: 1.75, ease: 'power1.in', onUpdate: scrib.draw}, .9)
+      .to('.load-cont .bg-color', {backgroundColor: '#ec1f27', duration: .2, ease: 'power1.in'}, 2.5);
     // 2) the shots cut past inside the viewfinder (Levector layers reveal, same timings)
     for (var e = 0; e < total; e++) {
       tl.to([layers[e].el, layers[e].img], {duration: D, ease: 'power2.inOut', y: 0}, PRE + DELAY * e);
@@ -606,13 +643,14 @@
     tl.addLabel('halfway', PRE + DELAY * (total - 1) + D)
       .call(function(){ layers.forEach(function(l, i){ if (i !== total - 1) gsap.set(l.el, {opacity: 0}); }); }, null, 'halfway')
       .to('.load-cont .bg-color', {duration: 0, y: '-100%'}, 'halfway')
-      .to(layers[total - 1].el, {duration: .5, ease: 'power1.inOut', opacity: 0}, 'halfway')
+      .set(layers[total - 1].el, {opacity: 0}, 'halfway')
     // 3) push through the viewfinder into the hero
       .to('.vf .tl', {x: '-14vw', y: '-14vh', duration: .7, ease: 'expo.inOut'}, 'halfway')
       .to('.vf .tr', {x: '14vw', y: '-14vh', duration: .7, ease: 'expo.inOut'}, 'halfway')
       .to('.vf .bl', {x: '-14vw', y: '14vh', duration: .7, ease: 'expo.inOut'}, 'halfway')
       .to('.vf .br', {x: '14vw', y: '14vh', duration: .7, ease: 'expo.inOut'}, 'halfway')
-      .to(vf, {opacity: 0, duration: .45, ease: 'power1.in'}, 'halfway+=.25');
+      .to(vf, {opacity: 0, duration: .3, ease: 'power1.in'}, 'halfway')
+      .set('.vf .mid', {opacity: 0}, 'halfway');
     tl.restart();
   }
   if (hasGsap && !reduce) {
