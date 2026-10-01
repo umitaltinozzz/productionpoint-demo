@@ -119,12 +119,15 @@
   .credits .client{font-size:15px; margin:0 0 6px}
   .credits .client b{font-weight:700}
   .credits h2{margin:0; font-weight:800; font-variation-settings:"wdth" 125; line-height:.95; letter-spacing:-.01em; font-size:clamp(34px, 7.4vw, 104px); max-width:14ch; overflow:hidden; padding-bottom:.08em}
-  .credits h2 .w{display:inline-block; white-space:nowrap}
+  .credits h2 .w{display:inline-block; white-space:nowrap; overflow:hidden; vertical-align:bottom; padding-bottom:.08em; margin-bottom:-.08em}
   .credits h2 .c{display:inline-block; transform:translateY(105%); transition:transform .8s var(--e); transition-delay:calc(var(--i) * 28ms)}
   .credits.in h2 .c{transform:none}
   .credits .meta{display:flex; flex-wrap:wrap; gap:6px 22px; margin:14px 0 0; font-size:14px; color:#e9e8e4}
   .credits .meta span{opacity:0; transform:translateY(10px); transition:opacity .6s ease .45s, transform .6s var(--e) .45s}
   .credits.in .meta span{opacity:1; transform:none}
+  .credits .client, .credits .watch{opacity:0; transform:translateY(10px); transition:opacity .6s ease, transform .6s var(--e)}
+  .credits.in .client{opacity:1; transform:none}
+  .credits.in .watch{opacity:1; transform:none; transition-delay:.6s}
   .watch{display:inline-flex; align-items:center; gap:10px; margin-top:18px; font-size:13px; font-weight:600; letter-spacing:.14em; font-variation-settings:"wdth" 112}
   .watch i{width:34px; height:34px; border-radius:50%; background:var(--accent); display:grid; place-items:center}
   .hero .arrow{position:absolute; z-index:6; top:50%; transform:translateY(-50%); background:none; border:0; color:#fff; padding:14px; cursor:pointer; opacity:.85}
@@ -144,7 +147,7 @@
     .counter{bottom:34px}
     .scroll-cue{left:var(--g); transform:none; align-items:flex-start}
   }
-  @media (prefers-reduced-motion:reduce){ .hero .slide img{transform:none} .credits h2 .c{transform:none} .credits .meta span{opacity:1; transform:none} }
+  @media (prefers-reduced-motion:reduce){ .hero .slide img{transform:none} .credits h2 .c{transform:none} .credits .meta span, .credits .client, .credits .watch{opacity:1; transform:none} }
 
   /* ================= services (projects-cont) ================= */
   .projects-cont{position:relative; width:100%; overflow:clip}
@@ -596,19 +599,36 @@
       pts.push({x: cx + ox + Math.cos(th) * r * (1 + .12 * Math.sin(t * 9)), y: cy + oy + Math.sin(th) * r * .86,
                 w: Math.max(1.6, gap * (.4 + 1.8 * Math.pow(t, 4)))});
     }
-    var done = 2, o = {p: 0};
+    // phase 2: thick scribbled knots dropped all over a grid in random order; each knot
+    // over-covers its cell, so once all are drawn every pixel is red (no flat colour fill)
+    var cell = Math.max(90, Math.min(W, H) / 5), cols = Math.ceil(W / cell) + 1, rows = Math.ceil(H / cell) + 1, cells = [];
+    for (var gy = 0; gy < rows; gy++) for (var gx = 0; gx < cols; gx++) cells.push([gx, gy]);
+    for (var k = cells.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)), tmp = cells[k]; cells[k] = cells[j]; cells[j] = tmp; }
+    var NS = pts.length;
+    cells.forEach(function(c){
+      var bx = (c[0] + (Math.random() - .5) * .2) * W / (cols - 1), by = (c[1] + (Math.random() - .5) * .2) * H / (rows - 1);
+      var rr = cell * (.55 + Math.random() * .2), ang = Math.random() * 6.28, steps = 22;
+      for (var q = 0; q <= steps; q++) {
+        ang += .62 + Math.random() * .25;
+        var rq = rr * (.45 + .55 * q / steps) * (1 + (Math.random() - .5) * .3);
+        pts.push({x: bx + Math.cos(ang) * rq, y: by + Math.sin(ang) * rq * .9, w: cell * (.62 + Math.random() * .2), start: q === 0});
+      }
+    });
+    var NT = pts.length - 1, done = 2, o = {p: 0, q: 0};
     function mid(a, b){ return {x: (a.x + b.x) / 2, y: (a.y + b.y) / 2}; }
     o.draw = function(){
-      var to = Math.min(N, Math.floor(o.p * N));
+      var to = o.q > 0 ? NS + Math.floor(o.q * (NT - NS)) : Math.min(NS - 1, Math.floor(o.p * (NS - 1)));
       for (; done <= to; done++) {
-        var a = pts[done - 2], b = pts[done - 1], c = pts[done], m1 = mid(a, b), m2 = mid(b, c);
+        var a = pts[done - 2], b = pts[done - 1], c = pts[done];
+        if (b.start || c.start) continue; // pen lifted between knots
+        var m1 = mid(a, b), m2 = mid(b, c);
         ctx.lineWidth = b.w; ctx.beginPath(); ctx.moveTo(m1.x, m1.y); ctx.quadraticCurveTo(b.x, b.y, m2.x, m2.y); ctx.stroke();
       }
     };
     return o;
   }
   function runLoader(){
-    var total = layers.length, D = .46, DELAY = .2, PRE = 2.7;
+    var total = layers.length, D = .46, DELAY = .2, PRE = 3.0;
     var vf = document.querySelector('.vf'), tcEl = document.getElementById('tc'), t0 = performance.now(), running = true;
     (function tick(){
       if (!running) return;
@@ -620,7 +640,6 @@
     var tl = gsap.timeline({paused: true, onComplete: function(){
       running = false;
       main.classList.add('back');
-      startPage();
     }});
     // 1) viewfinder frames the shot: corners close in from outside, REC + timecode appear
     tl.to(vf, {opacity: 1, duration: .25, ease: 'power1.out'}, 0)
@@ -634,8 +653,11 @@
     //     looping outward unevenly until the strokes cover the whole screen
     var scrib = makeScribble();
     tl.from('.load-cont .intro-logo', {opacity: 0, y: 14, duration: .7, ease: 'power2.out'}, 0)
-      .to(scrib, {p: 1, duration: 1.75, ease: 'power1.in', onUpdate: scrib.draw}, .9)
-      .to('.load-cont .bg-color', {backgroundColor: '#ec1f27', duration: .2, ease: 'power1.in'}, 2.5);
+      .to(scrib, {p: 1, duration: 1.25, ease: 'power1.in', onUpdate: scrib.draw}, .9)
+      .to(scrib, {q: 1, duration: .8, ease: 'power1.inOut', onUpdate: scrib.draw}, 2.15)
+      // once the strokes have closed up: solid red underneath, logo gone, so nothing peeks through
+      .set('.load-cont .bg-color', {backgroundColor: '#ec1f27'}, 2.97)
+      .set('.load-cont .intro-logo', {opacity: 0}, 2.97);
     // 2) the shots cut past inside the viewfinder (Levector layers reveal, same timings)
     for (var e = 0; e < total; e++) {
       tl.to([layers[e].el, layers[e].img], {duration: D, ease: 'power2.inOut', y: 0}, PRE + DELAY * e);
@@ -650,7 +672,8 @@
       .to('.vf .bl', {x: '-14vw', y: '14vh', duration: .7, ease: 'expo.inOut'}, 'halfway')
       .to('.vf .br', {x: '14vw', y: '14vh', duration: .7, ease: 'expo.inOut'}, 'halfway')
       .to(vf, {opacity: 0, duration: .3, ease: 'power1.in'}, 'halfway')
-      .set('.vf .mid', {opacity: 0}, 'halfway');
+      .set('.vf .mid', {opacity: 0}, 'halfway')
+      .call(startPage, null, 'halfway');
     tl.restart();
   }
   if (hasGsap && !reduce) {
