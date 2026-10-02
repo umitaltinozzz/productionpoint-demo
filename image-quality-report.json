@@ -1,0 +1,443 @@
+{
+  "method": "Lanczos 2x interpolation, mild unsharp mask, WebP quality 88",
+  "note": "No generative AI. Original pixels, faces and composition preserved. Interpolation does not recover missing source detail.",
+  "images": [
+    {
+      "original": "hero-1.webp",
+      "enhanced": "hero-1-hq.webp",
+      "original_size": [
+        1600,
+        900
+      ],
+      "enhanced_size": [
+        3200,
+        1800
+      ],
+      "original_bytes": 59842,
+      "enhanced_bytes": 171236,
+      "original_sha256": "1031803a64c37c1a7a1437ee27cc0ef618d17497cb9241433a2628ba71b2b65f"
+    },
+    {
+      "original": "hero-2.webp",
+      "enhanced": "hero-2-hq.webp",
+      "original_size": [
+        1600,
+        900
+      ],
+      "enhanced_size": [
+        3200,
+        1800
+      ],
+      "original_bytes": 70718,
+      "enhanced_bytes": 202100,
+      "original_sha256": "176c184e10a537e134bc6d9b02ba51f94e15e298fa56e1cf395f10162fb84147"
+    },
+    {
+      "original": "hero-3.webp",
+      "enhanced": "hero-3-hq.webp",
+      "original_size": [
+        1600,
+        900
+      ],
+      "enhanced_size": [
+        3200,
+        1800
+      ],
+      "original_bytes": 80002,
+      "enhanced_bytes": 237130,
+      "original_sha256": "25bb296ab901a49abf290483cb83ea9c12b040ca0387699978f82ffde53208a2"
+    },
+    {
+      "original": "hero-4.webp",
+      "enhanced": "hero-4-hq.webp",
+      "original_size": [
+        1600,
+        900
+      ],
+      "enhanced_size": [
+        3200,
+        1800
+      ],
+      "original_bytes": 127744,
+      "enhanced_bytes": 353594,
+      "original_sha256": "9a51e1748fa5442a4887175de8e0a2c0a3756f4657bc4541b06de7aee3b9f4fb"
+    },
+    {
+      "original": "hero-5.webp",
+      "enhanced": "hero-5-hq.webp",
+      "original_size": [
+        1600,
+        900
+      ],
+      "enhanced_size": [
+        3200,
+        1800
+      ],
+      "original_bytes": 83772,
+      "enhanced_bytes": 233194,
+      "original_sha256": "9085b3b974027352cd852f0432df2a928c56664f0af60f71dd15f84fef7ac57d"
+    },
+    {
+      "original": "load-1.webp",
+      "enhanced": "load-1-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 94556,
+      "enhanced_bytes": 392900,
+      "original_sha256": "b476a95e13b6a0e59e29a7c9d9adf37d8e2ceea745d7c698bee9a50bd7d6a8b6"
+    },
+    {
+      "original": "load-2.webp",
+      "enhanced": "load-2-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 75110,
+      "enhanced_bytes": 206514,
+      "original_sha256": "69a0f9c88e38484b38d1582f4604df695be986772f9c7867a57fb767b795719d"
+    },
+    {
+      "original": "load-3.webp",
+      "enhanced": "load-3-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 45752,
+      "enhanced_bytes": 133982,
+      "original_sha256": "9cb6376aebd6ac392d2451b62fa4007a77a9428b680d43aa3f47cf45f8afc514"
+    },
+    {
+      "original": "load-4.webp",
+      "enhanced": "load-4-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 39074,
+      "enhanced_bytes": 112050,
+      "original_sha256": "aaa7977e60f92bb72e5f5cee217c100ee97b337f3fabe5054ab642f28ad67bd2"
+    },
+    {
+      "original": "load-5.webp",
+      "enhanced": "load-5-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 106246,
+      "enhanced_bytes": 294818,
+      "original_sha256": "48ddbd1af122613976b34303f5356b11dc93bb44db51a4bebc68efe77f51c78c"
+    },
+    {
+      "original": "svc-1-sm.webp",
+      "enhanced": "svc-1-sm-hq.webp",
+      "original_size": [
+        540,
+        720
+      ],
+      "enhanced_size": [
+        1080,
+        1440
+      ],
+      "original_bytes": 91308,
+      "enhanced_bytes": 271314,
+      "original_sha256": "dd9875100808f191d35bd2b8351424cf0670a353ef33e712292bff27df93a36b"
+    },
+    {
+      "original": "svc-1.webp",
+      "enhanced": "svc-1-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 185014,
+      "enhanced_bytes": 549546,
+      "original_sha256": "b0561424659f7a824f1c978eb53b5b2af99bc9c5586cc6a24db4e910d6f1c5b7"
+    },
+    {
+      "original": "svc-2-sm.webp",
+      "enhanced": "svc-2-sm-hq.webp",
+      "original_size": [
+        540,
+        720
+      ],
+      "enhanced_size": [
+        1080,
+        1440
+      ],
+      "original_bytes": 37122,
+      "enhanced_bytes": 102750,
+      "original_sha256": "a3689025f875339646d40df77385dccf8c186cec40da2e86ac846ed172660070"
+    },
+    {
+      "original": "svc-2.webp",
+      "enhanced": "svc-2-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 74798,
+      "enhanced_bytes": 213334,
+      "original_sha256": "551a6245b6eeeb6b5408dd5efc528d19fa8ac9656029a15c6756d8ba48912921"
+    },
+    {
+      "original": "svc-3-sm.webp",
+      "enhanced": "svc-3-sm-hq.webp",
+      "original_size": [
+        540,
+        720
+      ],
+      "enhanced_size": [
+        1080,
+        1440
+      ],
+      "original_bytes": 56714,
+      "enhanced_bytes": 168148,
+      "original_sha256": "e282075a827a995b8907e836d0e418318f12bd2c15d3331d9e36d53872889dcd"
+    },
+    {
+      "original": "svc-3.webp",
+      "enhanced": "svc-3-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 147316,
+      "enhanced_bytes": 429378,
+      "original_sha256": "c700150d725b947245b0be26569562b57e94e787ab1f4eec6c7f5c47f3d6fd53"
+    },
+    {
+      "original": "svc-4-sm.webp",
+      "enhanced": "svc-4-sm-hq.webp",
+      "original_size": [
+        540,
+        720
+      ],
+      "enhanced_size": [
+        1080,
+        1440
+      ],
+      "original_bytes": 21862,
+      "enhanced_bytes": 65858,
+      "original_sha256": "169f4a20f30346e72fdb4337477430c7285eace99c06eb5f022c05b208c3150b"
+    },
+    {
+      "original": "svc-4.webp",
+      "enhanced": "svc-4-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 50620,
+      "enhanced_bytes": 147422,
+      "original_sha256": "f665dbeed85531049a42f6bff7cf312877341f8243043f329d1fc27de44a949f"
+    },
+    {
+      "original": "svc-5-sm.webp",
+      "enhanced": "svc-5-sm-hq.webp",
+      "original_size": [
+        540,
+        720
+      ],
+      "enhanced_size": [
+        1080,
+        1440
+      ],
+      "original_bytes": 19572,
+      "enhanced_bytes": 57654,
+      "original_sha256": "1d754b1be6e88138196535a5f4a85824a0588101f24c72717ec079770e83f3a7"
+    },
+    {
+      "original": "svc-5.webp",
+      "enhanced": "svc-5-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 40844,
+      "enhanced_bytes": 116902,
+      "original_sha256": "6e8ae7c149117469967b15e0eef6d922711653114947cadee0cc76dbedece9b8"
+    },
+    {
+      "original": "svc-6-sm.webp",
+      "enhanced": "svc-6-sm-hq.webp",
+      "original_size": [
+        540,
+        720
+      ],
+      "enhanced_size": [
+        1080,
+        1440
+      ],
+      "original_bytes": 15818,
+      "enhanced_bytes": 47206,
+      "original_sha256": "b58bc9e3bf474c4adb900d89cc55a65ffdcd92e4573e27bc582140ebbff77418"
+    },
+    {
+      "original": "svc-6.webp",
+      "enhanced": "svc-6-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 28076,
+      "enhanced_bytes": 87606,
+      "original_sha256": "d8a767fee74cd2555e2e2e00dc7c686b8454f7c5d10ea64cfa0b75bdc44eb890"
+    },
+    {
+      "original": "svc-7-sm.webp",
+      "enhanced": "svc-7-sm-hq.webp",
+      "original_size": [
+        540,
+        720
+      ],
+      "enhanced_size": [
+        1080,
+        1440
+      ],
+      "original_bytes": 24714,
+      "enhanced_bytes": 72252,
+      "original_sha256": "cbd674a5bd8ee605af5e3d90ec84bed9f487ab2604f7a3a12bbee8de8c28189f"
+    },
+    {
+      "original": "svc-7.webp",
+      "enhanced": "svc-7-hq.webp",
+      "original_size": [
+        1280,
+        720
+      ],
+      "enhanced_size": [
+        2560,
+        1440
+      ],
+      "original_bytes": 77774,
+      "enhanced_bytes": 229798,
+      "original_sha256": "57f8eb16509028b036eed34214b3b9fdbb541f761ba051bdf8a94372fadfa1cf"
+    },
+    {
+      "original": "w-burcu.webp",
+      "enhanced": "w-burcu-hq.webp",
+      "original_size": [
+        960,
+        540
+      ],
+      "enhanced_size": [
+        1920,
+        1080
+      ],
+      "original_bytes": 32196,
+      "enhanced_bytes": 91824,
+      "original_sha256": "0c6b374ab35c8f44dfb3c810bc95e77424099c30cc194f3ea32a8b656643120b"
+    },
+    {
+      "original": "w-om.webp",
+      "enhanced": "w-om-hq.webp",
+      "original_size": [
+        960,
+        540
+      ],
+      "enhanced_size": [
+        1920,
+        1080
+      ],
+      "original_bytes": 36640,
+      "enhanced_bytes": 102300,
+      "original_sha256": "843bef879fbd3370e5522233b4063d416710ab61f1f075e4395c9382a15275fc"
+    },
+    {
+      "original": "w-pelin.webp",
+      "enhanced": "w-pelin-hq.webp",
+      "original_size": [
+        940,
+        528
+      ],
+      "enhanced_size": [
+        1880,
+        1056
+      ],
+      "original_bytes": 31178,
+      "enhanced_bytes": 83226,
+      "original_sha256": "5bf25cf513510007fabd4f073fd7d964e8d4698d1f3bc38467e3dea85100e746"
+    },
+    {
+      "original": "w-tn.webp",
+      "enhanced": "w-tn-hq.webp",
+      "original_size": [
+        960,
+        540
+      ],
+      "enhanced_size": [
+        1920,
+        1080
+      ],
+      "original_bytes": 69696,
+      "enhanced_bytes": 206470,
+      "original_sha256": "dc721bc8e7d54a08e7cbfbbb72f9eba5c1a4d4e39b6d08bccb607b3cab7cea32"
+    },
+    {
+      "original": "w-yy.webp",
+      "enhanced": "w-yy-hq.webp",
+      "original_size": [
+        960,
+        540
+      ],
+      "enhanced_size": [
+        1920,
+        1080
+      ],
+      "original_bytes": 50930,
+      "enhanced_bytes": 150080,
+      "original_sha256": "c1343d695297f3b55212ed2d5f20fd454d208f5a435bd4366a2706195c4467ae"
+    }
+  ],
+  "original_total_bytes": 1875008,
+  "enhanced_total_bytes": 5530586
+}
