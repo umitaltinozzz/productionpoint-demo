@@ -301,6 +301,41 @@
     *,*::before,*::after{animation:none !important; transition:none !important}
     .slide .media{transform:none}
   }
+
+  /* Keep landscape footage at a useful scale on phones, rather than zooming
+     a small central crop to fill a portrait screen. */
+  @media (max-width:768px){
+    .hero{height:auto; min-height:0; padding-top:calc(88px + 75vw); background:#101010}
+    .hero .slide{inset:88px 0 auto; height:75vw}
+    .hero .slide img{transform:none; transition:none}
+    .hero::after{inset:88px 0 auto; height:75vw; background:linear-gradient(180deg, transparent 70%, rgba(16,16,16,.65))}
+    .credits{position:relative; inset:auto; padding:24px 20px 112px}
+    .credits h2{font-size:clamp(28px, 7.5vw, 48px); line-height:1.06; max-width:none; font-variation-settings:"wdth" 110}
+    .credits .client{font-size:13px; margin-bottom:10px}
+    .credits .meta{gap:6px 14px; font-size:13px; line-height:1.5}
+    .hero .arrow{display:grid; place-items:center; top:calc(88px + 75vw - 28px); width:44px; height:44px; padding:10px; border:1px solid rgba(255,255,255,.5); border-radius:50%; background:rgba(0,0,0,.5); opacity:1}
+    .hero .arrow svg{height:18px; width:12px}
+    .hero .arrow.prev{left:16px} .hero .arrow.next{right:16px}
+    .scroll-cue{left:20px; bottom:24px; transform:none; align-items:flex-start}
+    .counter{right:20px; bottom:32px}
+    .load-cont .layers__item-img{background-size:contain; background-repeat:no-repeat; background-color:#171717}
+    .projects-cont .bg-cont{display:none}
+    .projects-cont .bg-columns.txt{height:auto; min-height:0; padding:calc(56.25vw + 24px) 20px 36px; background:#171717; border-bottom:1px solid rgba(255,255,255,.15)}
+    .projects-cont .bg-columns.txt::before{content:""; position:absolute; top:0; left:0; width:100%; aspect-ratio:16/9; background:var(--service-image) center / cover no-repeat}
+    .sld1-sm{--service-image:url(assets/svc-1-hq.webp)}
+    .sld2-sm{--service-image:url(assets/svc-2-hq.webp)}
+    .sld3-sm{--service-image:url(assets/svc-3-hq.webp)}
+    .sld4-sm{--service-image:url(assets/svc-4-hq.webp)}
+    .sld5-sm{--service-image:url(assets/svc-5-hq.webp)}
+    .sld6-sm{--service-image:url(assets/svc-6-hq.webp)}
+    .sld7-sm{--service-image:url(assets/svc-7-hq.webp)}
+    .projects-cont .text-service{position:relative; inset:auto; width:100%; margin:0; transform:none !important; will-change:auto}
+    .projects-cont .text-service h2{font-size:clamp(27px, 7vw, 44px); line-height:1.12; letter-spacing:.02em; overflow-wrap:anywhere; text-shadow:none}
+    .projects-cont .text-service p{width:100%; max-width:60ch; font-size:15px; line-height:1.55; color:#e5e5e5; text-shadow:none}
+    .projects-cont .text-service > *{opacity:1 !important; transform:none !important}
+    .projects-cont .button{margin-top:20px; font-size:18px; min-height:44px}
+    .grid .frame{aspect-ratio:16/9 !important}
+  }
 </style>
 <script>document.documentElement.classList.add(matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduce' : 'js');</script>
 </head>
